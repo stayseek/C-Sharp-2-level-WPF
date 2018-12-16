@@ -19,16 +19,8 @@ namespace C_Sharp_WPF
         public void LoadData()
         {
             Model.LoadCSVData();
+            UpdateData();
 
-            if (Model.DepartmentsList.Count > 0)
-            {
-                view.DepartmentsCollection = Model.DepartmentsList;
-
-            }
-            if (Model.EmployeesList.Count > 0)
-            {
-                view.EmployeesCollection = Model.EmployeesList;
-            }
         }
 
         public void ViewEmployee(int EmployeeId)
@@ -44,8 +36,7 @@ namespace C_Sharp_WPF
             }
             employeeWindow.Owner = (Window)this.view;
             employeeWindow.ShowDialog();
-            view.EmployeesCollection = null;
-            view.EmployeesCollection = Model.EmployeesList;
+            UpdateData();
         }
 
         public void ViewDepartment(int DepartmentId)
@@ -61,6 +52,13 @@ namespace C_Sharp_WPF
             }
             departmentWindow.Owner = (Window)this.view;
             departmentWindow.ShowDialog();
+            UpdateData();
+        }
+
+        public void UpdateData()
+        {
+            view.EmployeesCollection = null;
+            view.EmployeesCollection = Model.EmployeesList;
             view.DepartmentsCollection = null;
             view.DepartmentsCollection = Model.DepartmentsList;
         }

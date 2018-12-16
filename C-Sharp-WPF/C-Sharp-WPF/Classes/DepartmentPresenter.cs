@@ -22,11 +22,11 @@ namespace C_Sharp_WPF
             if (currentDepartment != null)
             {
                 view.DepartmentName = currentDepartment.Name;
-                view.ButtonContent = "Сохранить.";
+                view.ButtonContent = "Сохранить";
             }
             else
             {
-                view.ButtonContent = "Создать.";
+                view.ButtonContent = "Создать";
             }
         }
 

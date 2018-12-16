@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-using C_Sharp_WPF.Classes;
 using System.Collections.ObjectModel;
 
 namespace C_Sharp_WPF
@@ -40,9 +39,9 @@ namespace C_Sharp_WPF
 
             this.Loaded += delegate { p.LoadData();};
         }
-        public ObservableCollection<Department> DepartmentsCollection { set => lbDepartmentList.ItemsSource = value;}
-        public ObservableCollection<Employee> EmployeesCollection { set => lbEmployeeList.ItemsSource = value;}
-        public int CurrentEmployee => lbEmployeeList.SelectedIndex;
-        public int CurrentDepartment => lbDepartmentList.SelectedIndex;
+        public ObservableCollection<Department> DepartmentsCollection { set => lvDepartmentList.ItemsSource = value;}
+        public ObservableCollection<Employee> EmployeesCollection { set => lvEmployeeList.ItemsSource = value;}
+        public int CurrentEmployee => lvEmployeeList.SelectedIndex;
+        public int CurrentDepartment => lvDepartmentList.SelectedIndex;
     }
 }

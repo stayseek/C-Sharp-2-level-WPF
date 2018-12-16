@@ -37,9 +37,7 @@ namespace C_Sharp_WPF
             }
             btnConfirm.Click += delegate { Close(); };
             this.Loaded += delegate { p.LoadData(); };
-
         }
-
         public string DepartmentName { get => tbDepartmentName.Text; set => tbDepartmentName.Text = value; }
         public string ButtonContent { set => btnConfirm.Content = value; }
     }

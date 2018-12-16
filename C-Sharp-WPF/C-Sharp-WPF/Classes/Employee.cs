@@ -33,6 +33,10 @@ namespace C_Sharp_WPF
         /// </summary>
         public int DepartmentId { set; get; }
         /// <summary>
+        /// Имя подразделения.
+        /// </summary>
+        public string Department { get { return Model.DepartmentsList[DepartmentId].Name; } }
+        /// <summary>
         /// Конструктор.
         /// </summary>
         /// <param name="id">Уникальный идентификатор.</param>
@@ -53,7 +57,7 @@ namespace C_Sharp_WPF
 
         public override string ToString()
         {
-            return ($"{LastName} {FirstName}\t{Age}\t{Sallary}\t{Model.DepartmentsList[DepartmentId].Name}");
+            return ($"{LastName} {FirstName}\t{Age}\t{Sallary}\t{Department}");
         }
 
     }

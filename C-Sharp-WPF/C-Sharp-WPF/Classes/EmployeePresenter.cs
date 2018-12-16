@@ -28,11 +28,11 @@ namespace C_Sharp_WPF
                 view.EmployeeAge = currentEmployee.Age;
                 view.EmployeeSallary = currentEmployee.Sallary;
                 view.EmployeeDepartmentId = currentEmployee.DepartmentId;
-                view.ButtonContent = "Сохранить.";
+                view.ButtonContent = "Сохранить";
             }
             else
             {
-                view.ButtonContent = "Создать.";
+                view.ButtonContent = "Создать";
             }
         }
 
