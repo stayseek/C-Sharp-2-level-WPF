@@ -17,59 +17,30 @@ namespace C_Sharp_WPF
     /// <summary>
     /// Логика взаимодействия для DepartmentWindow.xaml
     /// </summary>
-    public partial class DepartmentWindow : Window
+    public partial class DepartmentWindow : Window, IDepartmentView
     {
-        /// <summary>
-        /// Основное окно.
-        /// </summary>
-        MainWindow parentWindow;
-        /// <summary>
-        /// Идентификатор элемента, с которым производится работа.
-        /// </summary>
-        int Id;
+        DepartmentPresenter p;
         /// <summary>
         /// Конструктор.
         /// </summary>
-        public DepartmentWindow()
+        public DepartmentWindow(Department CurrentDepartment)
         {
             InitializeComponent();
-        }
-        /// <summary>
-        /// Загрузка данных в форму.
-        /// </summary>
-        /// <param name="id">Уникальный идентификатор.</param>
-        /// <param name="name">Название подразделения.</param>
-        public void LoadParams(int id, string name)
-        {
-            parentWindow = (MainWindow)this.Owner;
-            tbDepartmentId.Text = id.ToString();
-            Id = id;
-            tbDepartmentName.Text = name;
-            if (id == parentWindow?.NextDepartmentId)
+            p = new DepartmentPresenter(this,CurrentDepartment);
+            if (CurrentDepartment == null)
             {
-                btnConfirm.Content = "Создать";
+                btnConfirm.Click += delegate { p.AddDepartment(); };
             }
             else
             {
-                btnConfirm.Content = "Обновить";
+                btnConfirm.Click += delegate { p.UpdateDepartment(); };
             }
+            btnConfirm.Click += delegate { Close(); };
+            this.Loaded += delegate { p.LoadData(); };
+
         }
-        /// <summary>
-        /// Обработчик события нажатия на кнопку.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnConfirm_Click(object sender, RoutedEventArgs e)
-        {
-            if (Id == parentWindow.NextDepartmentId)
-            {
-                parentWindow?.DepartmentAdd(parentWindow.NextDepartmentId, tbDepartmentName.Text);
-            }
-            else
-            {
-                parentWindow?.DepartmentUpdate(Id, tbDepartmentName.Text);
-            }
-            this.Close();
-        }
+
+        public string DepartmentName { get => tbDepartmentName.Text; set => tbDepartmentName.Text = value; }
+        public string ButtonContent { set => btnConfirm.Content = value; }
     }
 }

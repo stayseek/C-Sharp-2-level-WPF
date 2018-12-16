@@ -71,11 +71,18 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Department.cs" />
+    <Compile Include="Classes\Department.cs" />
+    <Compile Include="Classes\DepartmentPresenter.cs" />
+    <Compile Include="Classes\EmployeePresenter.cs" />
+    <Compile Include="Classes\IDepartmentView.cs" />
+    <Compile Include="Classes\IEmployeeView.cs" />
+    <Compile Include="Classes\IMainView.cs" />
+    <Compile Include="Classes\Model.cs" />
+    <Compile Include="Classes\MainPresenter.cs" />
     <Compile Include="DepartmentWindow.xaml.cs">
       <DependentUpon>DepartmentWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Employee.cs" />
+    <Compile Include="Classes\Employee.cs" />
     <Compile Include="EmployeeWindow.xaml.cs">
       <DependentUpon>EmployeeWindow.xaml</DependentUpon>
     </Compile>

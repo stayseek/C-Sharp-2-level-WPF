@@ -53,7 +53,7 @@ namespace C_Sharp_WPF
 
         public override string ToString()
         {
-            return ($"{LastName} {FirstName}\t{Age}\t{Sallary}");
+            return ($"{LastName} {FirstName}\t{Age}\t{Sallary}\t{Model.DepartmentsList[DepartmentId].Name}");
         }
 
     }

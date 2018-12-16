@@ -25,16 +25,16 @@
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnEmployeeCreate" Grid.Column="0" Margin="10" Click="btnEmployeeCreate_Click">Создать</Button>
-            <Button x:Name="btnEmployeeEdit" Grid.Column="1" Margin="10" Click="btnEmployeeEdit_Click">Изменить</Button>
+            <Button x:Name="btnEmployeeCreate" Grid.Column="0" Margin="10">Создать</Button>
+            <Button x:Name="btnEmployeeEdit" Grid.Column="1" Margin="10">Изменить</Button>
         </Grid>
         <Grid x:Name="DepartmentGrid" Grid.Column="1" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50*"/>
                 <ColumnDefinition Width="50*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnDepartmentCreate" Grid.Column="0" Margin="10" Click="btnDepartmentCreate_Click">Создать</Button>
-            <Button x:Name="btnDepatrmentEdit" Grid.Column="1" Margin="10" Click="btnDepatrmentEdit_Click">Изменить</Button>
+            <Button x:Name="btnDepartmentCreate" Grid.Column="0" Margin="10">Создать</Button>
+            <Button x:Name="btnDepatrmentEdit" Grid.Column="1" Margin="10">Изменить</Button>
         </Grid>
     </Grid>
 </Window>

@@ -11,85 +11,42 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using C_Sharp_WPF.Classes;
+using System.Collections.ObjectModel;
 
 namespace C_Sharp_WPF
 {
     /// <summary>
     /// Логика взаимодействия для EmployeeWindow.xaml
     /// </summary>
-    public partial class EmployeeWindow : Window
+    public partial class EmployeeWindow : Window, IEmployeeView
     {
-        /// <summary>
-        /// Основное окно.
-        /// </summary>
-        MainWindow parentWindow;
-        /// <summary>
-        /// Идентификатор элемента, с которым производится работа.
-        /// </summary>
-        int Id;
+        EmployeePresenter p;
         /// <summary>
         /// Конструктор.
         /// </summary>
-        public EmployeeWindow()
+        public EmployeeWindow(Employee CurrentEmployee)
         {
             InitializeComponent();
-        }
-        /// <summary>
-        /// Загрузка данных в форму.
-        /// </summary>
-        /// <param name="id">Уникальный идентификатор.</param>
-        /// <param name="firstName">Имя.</param>
-        /// <param name="lastName">Фамилия.</param>
-        /// <param name="age">Возраст.</param>
-        /// <param name="sallary">Зарплата.</param>
-        /// <param name="departmentId">Уникальный номер подразделения.</param>
-        /// <param name="departments">Список подразделений.</param>
-        public void LoadParams(int id, string firstName, string lastName, int age, int sallary, int departmentId, List<Department> departments)
-        {
-            parentWindow = (MainWindow)this.Owner;
-            tbEmployeeId.Text = id.ToString();
-            Id = id;
-            tbEmployeeFirstName.Text = firstName;
-            tbEmployeeLastName.Text = lastName;
-            tbEmployeeAge.Text = age.ToString();
-            tbEmployeeSallary.Text = sallary.ToString();
-            cbEmployeeDepartment.ItemsSource = departments;
-            if (id == parentWindow.NextEmployeeId)
+            p = new EmployeePresenter(this, CurrentEmployee);
+            if (CurrentEmployee == null)
             {
-                btnEmployeeConfirm.Content = "Создать";
-                cbEmployeeDepartment.SelectedIndex = 0;
+                btnEmployeeConfirm.Click += delegate { p.AddEmployee(); };
             }
             else
             {
-                btnEmployeeConfirm.Content = "Обновить";
-                cbEmployeeDepartment.SelectedIndex = departmentId;
+                btnEmployeeConfirm.Click += delegate { p.UpdateEmployee(); };
             }
+            btnEmployeeConfirm.Click += delegate { Close(); };
+            this.Loaded += delegate { p.LoadData(); };
         }
-        /// <summary>
-        /// Обработчик события нажатия на кнопку.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnEmployeeConfirm_Click(object sender, RoutedEventArgs e)
-        {
-            if (Id == parentWindow.NextEmployeeId)
-            {
-                parentWindow?.EmployeeAdd(parentWindow.NextEmployeeId, 
-                    tbEmployeeFirstName.Text, 
-                    tbEmployeeLastName.Text, 
-                    int.Parse(tbEmployeeAge.Text), 
-                    int.Parse(tbEmployeeSallary.Text), 
-                    cbEmployeeDepartment.SelectedIndex); 
-            }
-            else
-            {
-                parentWindow?.EmployeeUpdate(Id, tbEmployeeFirstName.Text,
-                    tbEmployeeLastName.Text,
-                    int.Parse(tbEmployeeAge.Text),
-                    int.Parse(tbEmployeeSallary.Text),
-                    cbEmployeeDepartment.SelectedIndex);
-            }
-            this.Close();
-        }
+
+        public string EmployeeFirstName { get => tbEmployeeFirstName.Text; set => tbEmployeeFirstName.Text = value; }
+        public string EmployeeLastName { get => tbEmployeeLastName.Text; set => tbEmployeeLastName.Text = value; }
+        public int EmployeeAge { get => int.Parse(tbEmployeeAge.Text); set => tbEmployeeAge.Text = value.ToString(); }
+        public int EmployeeSallary { get => int.Parse(tbEmployeeSallary.Text); set => tbEmployeeSallary.Text = value.ToString(); }
+        public int EmployeeDepartmentId { get => cbEmployeeDepartment.SelectedIndex; set => cbEmployeeDepartment.SelectedIndex = value; }
+        public ObservableCollection<Department> DepartmentsList { set => cbEmployeeDepartment.ItemsSource = value; }
+        public string ButtonContent { set => btnEmployeeConfirm.Content = value; }
     }
 }

@@ -5,20 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:C_Sharp_WPF"
         mc:Ignorable="d"
-        Title="Подразделение" Height="160" Width="240" ResizeMode="NoResize">
+        Title="Подразделение" Height="120" Width="240" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
             <RowDefinition Height="20*"/>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="20*"/>
             <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center">Идентификатор</TextBlock>
-        <TextBox x:Name="tbDepartmentId" Grid.Row="1" Margin="5" TextAlignment="Center" IsEnabled="False"></TextBox>
-        <TextBlock Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center">Название</TextBlock>
-        <TextBox x:Name="tbDepartmentName" Grid.Row="3" Margin="5" TextAlignment="Center"></TextBox>
-        <Button x:Name="btnConfirm" Grid.Row="4" Margin="5" Click="BtnConfirm_Click"></Button>
+        <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center">Название</TextBlock>
+        <TextBox x:Name="tbDepartmentName" Grid.Row="1" Margin="5" TextAlignment="Center"></TextBox>
+        <Button x:Name="btnConfirm" Grid.Row="2" Margin="5"></Button>
             
 
     </Grid>
