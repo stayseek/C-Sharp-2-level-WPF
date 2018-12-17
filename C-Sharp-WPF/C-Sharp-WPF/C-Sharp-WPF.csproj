@@ -79,6 +79,7 @@
     <Compile Include="Classes\IMainView.cs" />
     <Compile Include="Classes\Model.cs" />
     <Compile Include="Classes\MainPresenter.cs" />
+    <Compile Include="Classes\DepartmentConverter.cs" />
     <Compile Include="DepartmentWindow.xaml.cs">
       <DependentUpon>DepartmentWindow.xaml</DependentUpon>
     </Compile>

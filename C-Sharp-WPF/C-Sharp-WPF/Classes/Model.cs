@@ -18,11 +18,11 @@ namespace C_Sharp_WPF
         /// <summary>
         /// Номер элемента, который будет присвоен при добавлении в список подразделений.
         /// </summary>
-        static public int NextDepartmentId { get { return DepartmentsList.Count; } }
+        static public int NextDepartmentId { get { return DepartmentsList[DepartmentsList.Count-1].Id+1; } }
         /// <summary>
         /// Номер элемента, который будет присвоен при добавлении в список сотрудников.
         /// </summary>
-        static public int NextEmployeeId { get { return EmployeesList.Count; } }
+        static public int NextEmployeeId { get { return EmployeesList[EmployeesList.Count-1].Id+1; } }
         /// <summary>
         /// Путь до файла со списком сотрудников.
         /// </summary>
@@ -34,7 +34,7 @@ namespace C_Sharp_WPF
         /// <summary>
         /// Загрузка данных из CSV файлов в списки сотрудников и подразделений.
         /// </summary>
-        static public void LoadCSVData()
+        static public void LoadData()
         {
             using (var r = new StreamReader(EMPLOYEESFILENAME))
             {
@@ -50,6 +50,26 @@ namespace C_Sharp_WPF
                 {
                     string[] s = r.ReadLine().Split(';');
                     DepartmentsList.Add(new Department(int.Parse(s[0]), s[1]));
+                }
+            }
+        }
+        /// <summary>
+        /// Сохранение данных в CSV-файлы.
+        /// </summary>
+        static public void SaveData()
+        {
+            using (StreamWriter sw = new StreamWriter(EMPLOYEESFILENAME))
+            {
+                foreach (Employee e in EmployeesList)
+                {
+                    sw.WriteLine(e);
+                }
+            }
+            using (StreamWriter sw = new StreamWriter(DEPARTMENTSFILENAME))
+            {
+                foreach (Department d in DepartmentsList)
+                {
+                    sw.WriteLine($"{d.Id};{d.Name}");
                 }
             }
         }

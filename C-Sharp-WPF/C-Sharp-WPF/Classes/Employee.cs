@@ -3,39 +3,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace C_Sharp_WPF
 {
-    public class Employee
+    public class Employee : INotifyPropertyChanged
     {
         /// <summary>
         /// Уникальный идентификатор.
         /// </summary>
         public int Id { private set; get; }
+        string firstName;
+        string lastName;
+        int age;
+        int sallary;
+        int departmentId;
         /// <summary>
         /// Имя.
         /// </summary>
-        public string FirstName { set; get; }
+        public string FirstName
+        {
+            get => this.firstName;
+            set
+            {
+                this.firstName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.FirstName)));
+            }
+        }
         /// <summary>
         /// Фамилия.
         /// </summary>
-        public string LastName { set; get; }
+        public string LastName
+        {
+            get => this.lastName;
+            set
+            {
+                this.lastName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.LastName)));
+            }
+        }
         /// <summary>
         /// Возраст.
         /// </summary>
-        public int Age { set; get; }
+        public int Age
+        {
+            get => this.age;
+            set
+            {
+                this.age = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Age)));
+            }
+        }   
         /// <summary>
         /// Зарплата.
         /// </summary>
-        public int Sallary { set; get; }
+        public int Sallary
+        {
+            get => this.sallary;
+            set
+            {
+                this.sallary = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Sallary)));
+            }
+        }
         /// <summary>
         /// Уникальный идентификатор подразделения.
         /// </summary>
-        public int DepartmentId { set; get; }
-        /// <summary>
-        /// Имя подразделения.
-        /// </summary>
-        public string Department { get { return Model.DepartmentsList[DepartmentId].Name; } }
+        public int DepartmentId
+        {
+            get => this.departmentId;
+            set
+            {
+                this.departmentId = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.DepartmentId)));
+            }
+        }
         /// <summary>
         /// Конструктор.
         /// </summary>
@@ -55,9 +97,11 @@ namespace C_Sharp_WPF
             DepartmentId = departmentId;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public override string ToString()
         {
-            return ($"{LastName} {FirstName}\t{Age}\t{Sallary}\t{Department}");
+            return ($"{Id};{FirstName};{LastName};{Age};{Sallary};{DepartmentId}");
         }
 
     }

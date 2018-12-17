@@ -30,12 +30,12 @@ namespace C_Sharp_WPF
         /// </summary>
         int EmployeeDepartmentId { set; get; }
         /// <summary>
-        /// Текст кнопки.
+        /// Текст на кнопке подтверждения.
         /// </summary>
         string ButtonContent { set; }
         /// <summary>
         /// Список подразделений.
         /// </summary>
-        ObservableCollection<Department> DepartmentsList {set;}
+        ObservableCollection<Department> DepartmentsList { set; }
     }
 }

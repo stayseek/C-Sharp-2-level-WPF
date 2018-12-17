@@ -9,20 +9,35 @@ namespace C_Sharp_WPF
 {
     class MainPresenter
     {
+        /// <summary>
+        /// Форма дя вывода.
+        /// </summary>
         private IMainView view;
-
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="View"></param>
         public MainPresenter(IMainView View)
         {
             this.view = View;
         }
-
+        /// <summary>
+        /// Загрузка данных и привязка данных в форму.
+        /// </summary>
         public void LoadData()
         {
-            Model.LoadCSVData();
-            UpdateData();
-
+            Model.LoadData();
+            view.EmployeesCollection = Model.EmployeesList;
+            view.DepartmentsCollection = Model.DepartmentsList;
         }
-
+        public void SaveData()
+        {
+            Model.SaveData();
+        }
+        /// <summary>
+        /// Вызор окна создания/редактирования сотрудника.
+        /// </summary>
+        /// <param name="EmployeeId">Идентификатор выбранного сотрудника.</param>
         public void ViewEmployee(int EmployeeId)
         {
             EmployeeWindow employeeWindow;
@@ -36,9 +51,11 @@ namespace C_Sharp_WPF
             }
             employeeWindow.Owner = (Window)this.view;
             employeeWindow.ShowDialog();
-            UpdateData();
         }
-
+        /// <summary>
+        /// Вызор окна создания/редактирования подразделения.
+        /// </summary>
+        /// <param name="DepartmentId">Идентификатор выбранного подразделения.</param>
         public void ViewDepartment(int DepartmentId)
         {
             DepartmentWindow departmentWindow;
@@ -52,15 +69,6 @@ namespace C_Sharp_WPF
             }
             departmentWindow.Owner = (Window)this.view;
             departmentWindow.ShowDialog();
-            UpdateData();
-        }
-
-        public void UpdateData()
-        {
-            view.EmployeesCollection = null;
-            view.EmployeesCollection = Model.EmployeesList;
-            view.DepartmentsCollection = null;
-            view.DepartmentsCollection = Model.DepartmentsList;
         }
     }
 }

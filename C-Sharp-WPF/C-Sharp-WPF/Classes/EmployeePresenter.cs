@@ -9,15 +9,27 @@ namespace C_Sharp_WPF
 {
     class EmployeePresenter
     {
+        /// <summary>
+        /// Сотрудник, над которым производятся действия.
+        /// </summary>
         private Employee currentEmployee;
+        /// <summary>
+        /// Форма для вывода.
+        /// </summary>
         private IEmployeeView view;
-
+        /// <summary>
+        /// Конструктор.
+        /// </summary>
+        /// <param name="View">Форма для вывода.</param>
+        /// <param name="CurrentEmployee">Сотрудник.</param>
         public EmployeePresenter(IEmployeeView View, Employee CurrentEmployee)
         {
             this.view = View;
             currentEmployee = CurrentEmployee;
         }
-
+        /// <summary>
+        /// Привязка данных в форму.
+        /// </summary>
         public void LoadData()
         {
             view.DepartmentsList = Model.DepartmentsList;
@@ -35,17 +47,22 @@ namespace C_Sharp_WPF
                 view.ButtonContent = "Создать";
             }
         }
-
+        /// <summary>
+        /// Добавление сотрудника в список.
+        /// </summary>
         public void AddEmployee()
         {
             Model.EmployeeAdd(
-                Model.EmployeesList.Count,
+                Model.NextEmployeeId,
                 view.EmployeeFirstName,
                 view.EmployeeLastName,
                 view.EmployeeAge,
                 view.EmployeeSallary,
                 view.EmployeeDepartmentId);
         }
+        /// <summary>
+        /// Редакторование сотрудника в списке.
+        /// </summary>
         public void UpdateEmployee()
         {
             Model.EmployeeUpdate(currentEmployee.Id, 

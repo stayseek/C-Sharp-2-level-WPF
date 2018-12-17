@@ -38,6 +38,7 @@ namespace C_Sharp_WPF
             btnDepartmentCreate.Click += delegate { p.ViewDepartment(-1); };
 
             this.Loaded += delegate { p.LoadData();};
+            this.Closing += delegate { p.SaveData(); };
         }
         public ObservableCollection<Department> DepartmentsCollection { set => lvDepartmentList.ItemsSource = value;}
         public ObservableCollection<Employee> EmployeesCollection { set => lvEmployeeList.ItemsSource = value;}

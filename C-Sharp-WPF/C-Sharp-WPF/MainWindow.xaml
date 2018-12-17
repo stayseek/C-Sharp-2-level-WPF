@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:C_Sharp_WPF"
         mc:Ignorable="d"
         Title="Организация" Height="450" Width="720" ResizeMode="NoResize">
+    <Window.Resources>
+        <local:DepartmentConverter x:Key="DepToName"></local:DepartmentConverter>
+    </Window.Resources>
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="10*"/>
@@ -25,7 +28,8 @@
                     <GridViewColumn Header = "Фамилия" Width = "80" DisplayMemberBinding = "{Binding LastName}" />
                     <GridViewColumn Header = "Возраст" Width = "50" DisplayMemberBinding = "{Binding Age}" />
                     <GridViewColumn Header = "Зарплата" Width = "80" DisplayMemberBinding = "{Binding Sallary}" />
-                    <GridViewColumn Header = "Подразделение" Width = "120" DisplayMemberBinding = "{Binding Department}" />
+                    <GridViewColumn Header = "Подразделение" Width = "120" 
+                     DisplayMemberBinding = "{Binding DepartmentId,Converter={StaticResource DepToName},UpdateSourceTrigger=PropertyChanged}" />
                 </GridView>
             </ListView.View>
         </ListView>
