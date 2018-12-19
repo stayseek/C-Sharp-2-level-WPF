@@ -46,7 +46,7 @@ namespace C_Sharp_WPF
         /// </summary>
         public void AddDepartment()
         {
-            Model.DepartmentAdd(Model.NextDepartmentId,view.DepartmentName);
+            Model.DepartmentAdd(view.DepartmentName);
         }
         /// <summary>
         /// Редактирование подразделения в списке.

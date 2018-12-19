@@ -42,9 +42,5 @@ namespace C_Sharp_WPF
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public override string ToString()
-        {
-            return ($"{Name}");
-        }
     }
 }

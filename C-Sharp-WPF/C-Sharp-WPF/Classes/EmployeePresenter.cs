@@ -53,7 +53,6 @@ namespace C_Sharp_WPF
         public void AddEmployee()
         {
             Model.EmployeeAdd(
-                Model.NextEmployeeId,
                 view.EmployeeFirstName,
                 view.EmployeeLastName,
                 view.EmployeeAge,

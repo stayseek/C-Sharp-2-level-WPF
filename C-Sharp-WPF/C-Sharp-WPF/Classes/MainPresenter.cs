@@ -51,6 +51,7 @@ namespace C_Sharp_WPF
             }
             employeeWindow.Owner = (Window)this.view;
             employeeWindow.ShowDialog();
+
         }
         /// <summary>
         /// Вызор окна создания/редактирования подразделения.

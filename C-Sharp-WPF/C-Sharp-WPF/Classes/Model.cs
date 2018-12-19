@@ -62,7 +62,7 @@ namespace C_Sharp_WPF
             {
                 foreach (Employee e in EmployeesList)
                 {
-                    sw.WriteLine(e);
+                    sw.WriteLine($"{e.Id};{e.FirstName};{e.LastName};{e.Age};{e.Sallary};{e.DepartmentId}");
                 }
             }
             using (StreamWriter sw = new StreamWriter(DEPARTMENTSFILENAME))
@@ -82,18 +82,18 @@ namespace C_Sharp_WPF
         /// <param name="age">Возраст.</param>
         /// <param name="sallary">Зарплата.</param>
         /// <param name="departmentId">Уникальный идентификатор подразделения.</param>
-        static public void EmployeeAdd(int id, string firstName, string lastName, int age, int sallary, int departmentId)
+        static public void EmployeeAdd(string firstName, string lastName, int age, int sallary, int departmentId)
         {
-            EmployeesList.Add(new Employee(id, firstName, lastName, age, sallary, departmentId));
+            EmployeesList.Add(new Employee(NextEmployeeId, firstName, lastName, age, sallary, departmentId));
         }
         /// <summary>
         /// Добавление подразделения в список.
         /// </summary>
         /// <param name="id">Уникальный идентификатор подразделения.</param>
         /// <param name="name">Название подразделения.</param>
-        static public void DepartmentAdd(int id, string name)
+        static public void DepartmentAdd(string name)
         {
-            DepartmentsList.Add(new Department(id, name));
+            DepartmentsList.Add(new Department(NextDepartmentId, name));
         }
         /// <summary>
         /// Обновление сотрудника в списке
