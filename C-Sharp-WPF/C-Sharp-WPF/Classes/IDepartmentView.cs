@@ -12,6 +12,9 @@ namespace C_Sharp_WPF
         /// Название подразделения.
         /// </summary>
         string DepartmentName { set; get; }
+        /// <summary>
+        /// Текст на кнопке подтверждения.
+        /// </summary>
         string ButtonContent { set; }
     }
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace C_Sharp_WPF
 {
-    public class Department
+    public class Department : INotifyPropertyChanged
     {
         /// <summary>
         /// Уникальный идентификатор.
@@ -15,7 +16,19 @@ namespace C_Sharp_WPF
         /// <summary>
         /// Название.
         /// </summary>
-        public string Name { set; get; }
+        string name;
+        /// <summary>
+        /// Название.
+        /// </summary>
+        public string Name
+        {
+            get => this.name;
+            set
+            {
+                this.name = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Name)));
+            }
+        }
         /// <summary>
         /// Конструктор.
         /// </summary>
@@ -27,9 +40,11 @@ namespace C_Sharp_WPF
             Name = name;
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public override string ToString()
         {
-            return Name;
+            return ($"{Name}");
         }
     }
 }
