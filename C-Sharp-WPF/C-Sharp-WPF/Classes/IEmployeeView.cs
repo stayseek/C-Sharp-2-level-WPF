@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Data;
 
 namespace C_Sharp_WPF
 {
@@ -20,22 +21,19 @@ namespace C_Sharp_WPF
         /// <summary>
         /// Возраст.
         /// </summary>
-        int EmployeeAge { set; get; }
+        string EmployeeAge { set; get; }
         /// <summary>
         /// Зарплата.
         /// </summary>
-        int EmployeeSallary { set; get; }
+        string EmployeeSallary { set; get; }
         /// <summary>
-        /// Уникальный идентификатор подразделения.
+        /// Подразделение.
         /// </summary>
-        int EmployeeDepartmentId { set; get; }
-        /// <summary>
-        /// Текст на кнопке подтверждения.
-        /// </summary>
-        string ButtonContent { set; }
+        string EmployeeDepartment { set; get; }
+
         /// <summary>
         /// Список подразделений.
         /// </summary>
-        ObservableCollection<Department> DepartmentsList { set; }
+        DataTable DepartmentsList { set; }
     }
 }

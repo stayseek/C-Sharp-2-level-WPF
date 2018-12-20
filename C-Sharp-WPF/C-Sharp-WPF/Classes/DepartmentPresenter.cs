@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace C_Sharp_WPF
 {
     class DepartmentPresenter
     {
         /// <summary>
-        /// Подразделение, с которым производится действие.
+        /// Подразделение, с которым производятся действия.
         /// </summary>
-        private Department currentDepartment;
+        private DataRow currentDepartment;
         /// <summary>
         /// Форма для вывода.
         /// </summary>
@@ -21,39 +22,24 @@ namespace C_Sharp_WPF
         /// </summary>
         /// <param name="View">Форма для вывода.</param>
         /// <param name="CurrentDepartment">Подразделение.</param>
-        public DepartmentPresenter(IDepartmentView View, Department CurrentDepartment)
+        public DepartmentPresenter(IDepartmentView View, DataRow CurrentDepartment)
         {
             this.view = View;
             currentDepartment = CurrentDepartment;
         }
         /// <summary>
-        /// Привязка данных в форме.
+        /// Загрузка данных в форму.
         /// </summary>
         public void LoadData()
         {
-            if (currentDepartment != null)
-            {
-                view.DepartmentName = currentDepartment.Name;
-                view.ButtonContent = "Сохранить";
-            }
-            else
-            {
-                view.ButtonContent = "Создать";
-            }
+            view.DepartmentName = currentDepartment["DepartmentName"].ToString();
         }
         /// <summary>
-        /// Добавление подразделения в список.
+        /// Выгрузка данных из формы.
         /// </summary>
-        public void AddDepartment()
+        public void SaveData()
         {
-            Model.DepartmentAdd(view.DepartmentName);
-        }
-        /// <summary>
-        /// Редактирование подразделения в списке.
-        /// </summary>
-        public void UpdateDepartment()
-        {
-            Model.DepartmentUpdate(currentDepartment.Id,view.DepartmentName);
+            currentDepartment["DepartmentName"] = view.DepartmentName;
         }
     }
 }

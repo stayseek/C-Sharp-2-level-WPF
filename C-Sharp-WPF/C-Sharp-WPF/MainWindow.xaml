@@ -5,58 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:C_Sharp_WPF"
         mc:Ignorable="d"
-        Title="Организация" Height="450" Width="720" ResizeMode="NoResize">
-    <Window.Resources>
-        <local:DepartmentConverter x:Key="DepToName"></local:DepartmentConverter>
-    </Window.Resources>
+        Title="Организация" Height="450" Width="720">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
-            <RowDefinition Height="80*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50*"/>
-            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Сотрудники</TextBlock>
         <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">Подразделения</TextBlock>
-        <ListView Grid.Column="0" Grid.Row="1" Margin = "10" Name = "lvEmployeeList">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header = "Id" Width = "20" DisplayMemberBinding = "{Binding Id}" />
-                    <GridViewColumn Header = "Имя" Width = "80" DisplayMemberBinding = "{Binding FirstName}" />
-                    <GridViewColumn Header = "Фамилия" Width = "80" DisplayMemberBinding = "{Binding LastName}" />
-                    <GridViewColumn Header = "Возраст" Width = "50" DisplayMemberBinding = "{Binding Age}" />
-                    <GridViewColumn Header = "Зарплата" Width = "80" DisplayMemberBinding = "{Binding Sallary}" />
-                    <GridViewColumn Header = "Подразделение" Width = "120" 
-                     DisplayMemberBinding = "{Binding DepartmentId, Converter={StaticResource DepToName}, UpdateSourceTrigger=PropertyChanged}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <ListView Grid.Column="1" Grid.Row="1" Margin = "10" Name = "lvDepartmentList">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header = "Id" Width = "20" DisplayMemberBinding = "{Binding Id}" />
-                    <GridViewColumn Header = "Название" Width = "100" DisplayMemberBinding = "{Binding Name}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid Grid.Column="0" Grid.Row="1" Margin="10" Name="dgEmployeesList" 
+                  AutoGenerateColumns = "False" EnableRowVirtualization = "True"
+                  ItemsSource="{Binding}" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name = "employeeIdColumn" Binding = "{Binding Id}" Header = "Id" IsReadOnly = "True" Width = "Auto" />
+                <DataGridTextColumn x:Name = "employeeFirstNameColumn" Binding = "{Binding FirstName}" Header = "Имя" Width = "Auto" />
+                <DataGridTextColumn x:Name = "employeeLastNameColumn" Binding = "{Binding LastName}" Header = "Фамилия" Width = "Auto" />
+                <DataGridTextColumn x:Name = "employeeAgeColumn" Binding = "{Binding Age}" Header = "Возраст" Width = "Auto" />
+                <DataGridTextColumn x:Name = "employeeSallaryColumn" Binding = "{Binding Sallary}" Header = "Зарплата" Width = "Auto" />
+                <DataGridTextColumn x:Name = "employeeDepartmentColumn" Binding = "{Binding Department}" Header = "Подразделение" Width = "Auto" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Column="1" Grid.Row="1" Margin="10" Name="dgDepartmentsList" 
+                  AutoGenerateColumns = "False" EnableRowVirtualization = "True" 
+                  ItemsSource="{Binding}" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name = "departmentIdColumn" Binding = "{Binding Id}" Header = "Id" IsReadOnly = "True" Width = "Auto" />
+                <DataGridTextColumn x:Name = "departmentNameColumn" Binding = "{Binding DepartmentName}" Header = "Название" Width = "Auto" />
+            </DataGrid.Columns>
+        </DataGrid>
         <Grid x:Name="EmployeeGrid" Grid.Column="0" Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnEmployeeCreate" Grid.Column="0" Margin="10">Создать</Button>
             <Button x:Name="btnEmployeeEdit" Grid.Column="1" Margin="10">Изменить</Button>
+            <Button x:Name="btnEmployeeDelete" Grid.Column="2" Margin="10">Удалить</Button>
         </Grid>
         <Grid x:Name="DepartmentGrid" Grid.Column="1" Grid.Row="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50*"/>
-                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnDepartmentCreate" Grid.Column="0" Margin="10">Создать</Button>
             <Button x:Name="btnDepatrmentEdit" Grid.Column="1" Margin="10">Изменить</Button>
+            <Button x:Name="btnDepatrmentDelete" Grid.Column="2" Margin="10">Удалить</Button>
         </Grid>
     </Grid>
 </Window>

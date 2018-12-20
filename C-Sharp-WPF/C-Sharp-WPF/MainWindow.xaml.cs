@@ -12,8 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.IO;
-using System.Collections.ObjectModel;
+using System.Data;
 
 namespace C_Sharp_WPF
 {
@@ -31,18 +30,20 @@ namespace C_Sharp_WPF
             InitializeComponent();
             p = new MainPresenter(this);
 
-            btnEmployeeEdit.Click += delegate { p.ViewEmployee(CurrentEmployee); };
-            btnEmployeeCreate.Click += delegate { p.ViewEmployee(-1); };
+            btnEmployeeEdit.Click += delegate { p.EditEmployee(CurrentEmployee); };
+            btnEmployeeCreate.Click += delegate { p.CreateEmployee(); };
+            btnEmployeeDelete.Click += delegate { p.DeleteEmployee(CurrentEmployee); };
 
-            btnDepatrmentEdit.Click += delegate { p.ViewDepartment(CurrentDepartment); };
-            btnDepartmentCreate.Click += delegate { p.ViewDepartment(-1); };
+            btnDepatrmentEdit.Click += delegate { p.EditDepartment(CurrentDepartment); };
+            btnDepartmentCreate.Click += delegate { p.CreateDepartment(); };
+            btnDepatrmentDelete.Click += delegate { p.DeleteDepartment(CurrentDepartment); };
 
             this.Loaded += delegate { p.LoadData();};
-            this.Closing += delegate { p.SaveData(); };
         }
-        public ObservableCollection<Department> DepartmentsCollection { set => lvDepartmentList.ItemsSource = value;}
-        public ObservableCollection<Employee> EmployeesCollection { set => lvEmployeeList.ItemsSource = value;}
-        public int CurrentEmployee => lvEmployeeList.SelectedIndex;
-        public int CurrentDepartment => lvDepartmentList.SelectedIndex;
+
+        public DataRowView CurrentEmployee => dgEmployeesList.SelectedItem as DataRowView;
+        public DataRowView CurrentDepartment => dgDepartmentsList.SelectedItem as DataRowView;
+        public DataView DepartmentsCollection { set => dgDepartmentsList.DataContext = value; }
+        public DataView EmployeesCollection { set => dgEmployeesList.DataContext = value; }
     }
 }

@@ -2,124 +2,196 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace C_Sharp_WPF
 {
     static class Model
     {
         /// <summary>
-        /// Список сотрудников.
+        /// Соединение.
         /// </summary>
-        static public ObservableCollection<Employee> EmployeesList = new ObservableCollection<Employee>();
+        static SqlConnection connection;
         /// <summary>
-        /// Список подразделений.
+        /// Адаптер таблицы сотрудников.
         /// </summary>
-        static public ObservableCollection<Department> DepartmentsList = new ObservableCollection<Department>();
+        static SqlDataAdapter employeesAdapter;
         /// <summary>
-        /// Номер элемента, который будет присвоен при добавлении в список подразделений.
+        /// Таблица сотрудников.
         /// </summary>
-        static public int NextDepartmentId { get { return DepartmentsList[DepartmentsList.Count-1].Id+1; } }
+        public static DataTable employeesDt;
         /// <summary>
-        /// Номер элемента, который будет присвоен при добавлении в список сотрудников.
+        /// Адаптер таблица подразделений.
         /// </summary>
-        static public int NextEmployeeId { get { return EmployeesList[EmployeesList.Count-1].Id+1; } }
+        static SqlDataAdapter departmentsAdapter;
         /// <summary>
-        /// Путь до файла со списком сотрудников.
+        /// Таблица подразделений.
         /// </summary>
-        const string EMPLOYEESFILENAME = @"..\..\data\employeeslist.csv";
+        public static DataTable departmentsDt;
         /// <summary>
-        /// Путь до файла со списком подразделений.
+        /// Настройка подключения к БД.
         /// </summary>
-        const string DEPARTMENTSFILENAME = @"..\..\data\departmentslist.csv";
-        /// <summary>
-        /// Загрузка данных из CSV файлов в списки сотрудников и подразделений.
-        /// </summary>
-        static public void LoadData()
+        static public void InitializeDB()
         {
-            using (var r = new StreamReader(EMPLOYEESFILENAME))
+            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            connection = new SqlConnection(connectionString);
+            employeesAdapter = new SqlDataAdapter();
+
+            SqlCommand command = new SqlCommand(@"SELECT Id,FirstName,LastName,Age,Sallary,Department 
+                                                  FROM Employees", connection);
+            employeesAdapter.SelectCommand = command;
+
+            command = new SqlCommand(@"INSERT INTO Employees (FirstName,LastName,Age,Sallary,Department)
+                                       VALUES (@FirstName,@LastName,@Age,@Sallary,@Department);
+                                       SET @Id = @@IDENTITY;",connection);
+            command.Parameters.Add("@FirstName", SqlDbType.NVarChar, -1, "FirstName");
+            command.Parameters.Add("@LastName", SqlDbType.NVarChar, -1, "LastName");
+            command.Parameters.Add("@Age", SqlDbType.Int, 0, "Age");
+            command.Parameters.Add("@Sallary", SqlDbType.Int, 0, "Sallary");
+            command.Parameters.Add("@Department", SqlDbType.NVarChar, -1, "Department");
+            SqlParameter param = command.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
+            param.Direction = ParameterDirection.Output;
+            employeesAdapter.InsertCommand = command;
+
+            command = new SqlCommand(@"UPDATE Employees 
+                                       SET FirstName = @FirstName, 
+                                           LastName = @LastName,
+                                           Age = @Age,
+                                           Sallary = @Sallary,
+                                           Department = @Department
+                                       WHERE Id = @Id", connection);
+            command.Parameters.Add("@FirstName", SqlDbType.NVarChar, -1, "FirstName");
+            command.Parameters.Add("@LastName", SqlDbType.NVarChar, -1, "LastName");
+            command.Parameters.Add("@Age", SqlDbType.Int, 0, "Age");
+            command.Parameters.Add("@Sallary", SqlDbType.Int, 0, "Sallary");
+            command.Parameters.Add("@Department", SqlDbType.NVarChar, -1, "Department");
+            param = command.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
+            param.SourceVersion = DataRowVersion.Original;
+            employeesAdapter.UpdateCommand = command;
+
+            command = new SqlCommand(@"DELETE FROM Employees WHERE Id = @Id", connection);
+            command.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
+            param.SourceVersion = DataRowVersion.Original;
+            employeesAdapter.DeleteCommand = command;
+        
+            employeesDt = new DataTable();
+            employeesAdapter.Fill(employeesDt);
+
+            departmentsAdapter = new SqlDataAdapter();
+
+            command = new SqlCommand(@"SELECT Id, DepartmentName 
+                                                  FROM Departments", connection);
+            departmentsAdapter.SelectCommand = command;
+
+            command = new SqlCommand(@"INSERT INTO Departments (DepartmentName)
+                                       VALUES (@DepartmentName);
+                                       SET @Id = @@IDENTITY;", connection);
+            command.Parameters.Add("@DepartmentName", SqlDbType.NVarChar, -1, "DepartmentName");
+            param = command.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
+            param.Direction = ParameterDirection.Output;
+            departmentsAdapter.InsertCommand = command;
+
+            command = new SqlCommand(@"UPDATE Departments SET DepartmentName = @DepartmentName WHERE Id = @Id;", connection);
+            command.Parameters.Add("@DepartmentName", SqlDbType.NVarChar, -1, "DepartmentName");
+            param = command.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
+            param.SourceVersion = DataRowVersion.Original;
+            departmentsAdapter.UpdateCommand = command;
+
+            command = new SqlCommand(@"DELETE FROM Departments WHERE Id = @Id", connection);
+            command.Parameters.Add("@Id", SqlDbType.Int, 0, "Id");
+            param.SourceVersion = DataRowVersion.Original;
+            departmentsAdapter.DeleteCommand = command;
+
+            departmentsDt = new DataTable();
+            departmentsAdapter.Fill(departmentsDt);
+        }
+        /// <summary>
+        /// Заполнение таблиц данными, если они пустые.
+        /// </summary>
+        static public void FillDB()
+        {
+            int i,j;
+            using (SqlConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
             {
-                while (!r.EndOfStream)
+                connection.Open();
+                SqlCommand command = new SqlCommand("SELECT COUNT(*) FROM Departments", connection);
+                i = (int)command.ExecuteScalar();
+                command = new SqlCommand("SELECT COUNT(*) FROM Employees", connection);
+                j = (int)command.ExecuteScalar();
+                if (i == 0)
                 {
-                    string[] s = r.ReadLine().Split(';');
-                    EmployeesList.Add(new Employee(int.Parse(s[0]), s[1], s[2], int.Parse(s[3]), int.Parse(s[4]), int.Parse(s[5])));
+                    for (i = 0; i < 10; i++)
+                    {
+                        command = new SqlCommand($@"INSERT INTO Employees (FirstName,LastName,Age,Sallary,Department)
+                                       VALUES (N'Вася{i}',N'Пупкин{i}','{i+18}','{i*10000}',N'Подразделение{i}');", connection);
+                        command.ExecuteNonQuery();
+                    }
                 }
-            }
-            using (var r = new StreamReader(DEPARTMENTSFILENAME))
-            {
-                while (!r.EndOfStream)
+                if (j == 0)
                 {
-                    string[] s = r.ReadLine().Split(';');
-                    DepartmentsList.Add(new Department(int.Parse(s[0]), s[1]));
+                    for (i = 0; i < 10; i++)
+                    {
+                        command = new SqlCommand($@"INSERT INTO Departments (DepartmentName)
+                                       VALUES (N'Подразделение{i}');", connection);
+                        command.ExecuteNonQuery();
+                    }
                 }
+                connection.Close();
             }
+   
         }
         /// <summary>
-        /// Сохранение данных в CSV-файлы.
+        /// Добавление сотрудника в таблицу.
         /// </summary>
-        static public void SaveData()
+        /// <param name="employee">Сотрудник.</param>
+        static public void EmployeeAdd(DataRow employee)
         {
-            using (StreamWriter sw = new StreamWriter(EMPLOYEESFILENAME))
-            {
-                foreach (Employee e in EmployeesList)
-                {
-                    sw.WriteLine($"{e.Id};{e.FirstName};{e.LastName};{e.Age};{e.Sallary};{e.DepartmentId}");
-                }
-            }
-            using (StreamWriter sw = new StreamWriter(DEPARTMENTSFILENAME))
-            {
-                foreach (Department d in DepartmentsList)
-                {
-                    sw.WriteLine($"{d.Id};{d.Name}");
-                }
-            }
+            employeesDt.Rows.Add(employee);
+            employeesAdapter.Update(employeesDt);
         }
         /// <summary>
-        /// Добавление сотрудника в список.
+        /// Добавление подразделения в таблицу.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор.</param>
-        /// <param name="firstName">Имя.</param>
-        /// <param name="lastName">Фамилия.</param>
-        /// <param name="age">Возраст.</param>
-        /// <param name="sallary">Зарплата.</param>
-        /// <param name="departmentId">Уникальный идентификатор подразделения.</param>
-        static public void EmployeeAdd(string firstName, string lastName, int age, int sallary, int departmentId)
+        /// <param name="department">Подразделение.</param>
+        static public void DepartmentAdd(DataRow department)
         {
-            EmployeesList.Add(new Employee(NextEmployeeId, firstName, lastName, age, sallary, departmentId));
+            departmentsDt.Rows.Add(department);
+            departmentsAdapter.Update(departmentsDt);
         }
         /// <summary>
-        /// Добавление подразделения в список.
+        /// Обновление таблицы сотрудников.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор подразделения.</param>
-        /// <param name="name">Название подразделения.</param>
-        static public void DepartmentAdd(string name)
+        static public void EmployeeUpdate()
         {
-            DepartmentsList.Add(new Department(NextDepartmentId, name));
+            employeesAdapter.Update(employeesDt);
         }
         /// <summary>
-        /// Обновление сотрудника в списке
+        /// Обновление таблицы подразделений.
         /// </summary>
-        /// <param name="id">Номер элемента в списке.</param>
-        /// <param name="firstName">Имя.</param>
-        /// <param name="lastName">Фамилия.</param>
-        /// <param name="age">Возраст.</param>
-        /// <param name="sallary">Зарплата.</param>
-        /// <param name="departmentId">Уникальный идентификатор подразделения.</param>
-        static public void EmployeeUpdate(int id, string firstName, string lastName, int age, int sallary, int departmentId)
+        static public void DepartmentUpdate()
         {
-            EmployeesList[id].FirstName = firstName;
-            EmployeesList[id].LastName = lastName;
-            EmployeesList[id].Age = age;
-            EmployeesList[id].Sallary = sallary;
-            EmployeesList[id].DepartmentId = departmentId;
+            departmentsAdapter.Update(departmentsDt);
         }
         /// <summary>
-        /// Обновление подразделения в списке.
+        /// Удаление сотрудника из таблицы.
         /// </summary>
-        /// <param name="id">Уникальный идентификатор подразделения.</param>
-        /// <param name="name">Название подразделения.</param>
-        static public void DepartmentUpdate(int id, string name)
+        /// <param name="employeeRow">Удаляемый сотрудник.</param>
+        static public void EmployeeDelete(DataRowView employeeRow)
         {
-            DepartmentsList[id].Name = name;
+            employeeRow.Row.Delete();
+            employeesAdapter.Update(employeesDt);
+        }
+        /// <summary>
+        /// Удаление подразделения из таблицы.
+        /// </summary>
+        /// <param name="departmentRow">Удаляемое подразделение.</param>
+        static public void DepartmentDelete(DataRowView departmentRow)
+        {
+            departmentRow.Row.Delete();
+            departmentsAdapter.Update(departmentsDt);
         }
     }
 }

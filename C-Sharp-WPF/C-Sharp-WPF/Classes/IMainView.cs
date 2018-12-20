@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Data;
 
 namespace C_Sharp_WPF
 {
@@ -12,19 +13,19 @@ namespace C_Sharp_WPF
         /// <summary>
         /// Выбранный сотрудник.
         /// </summary>
-        int CurrentEmployee { get; }
+        DataRowView CurrentEmployee { get; }
         /// <summary>
         /// Выбранное подразделение.
         /// </summary>
-        int CurrentDepartment { get; }
+        DataRowView CurrentDepartment { get; }
         /// <summary>
         /// Коллекция подразделений.
         /// </summary>
-        ObservableCollection<Department> DepartmentsCollection { set;}
+        DataView DepartmentsCollection { set;}
         /// <summary>
         /// Коллекция сотрудников.
         /// </summary>
-        ObservableCollection<Employee> EmployeesCollection { set;}
+        DataView EmployeesCollection { set;}
 
     }
 }

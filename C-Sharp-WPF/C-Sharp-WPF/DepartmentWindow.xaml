@@ -14,6 +14,6 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center">Название</TextBlock>
         <TextBox x:Name="tbDepartmentName" Grid.Row="1" Margin="5" TextAlignment="Center"></TextBox>
-        <Button x:Name="btnConfirm" Grid.Row="2" Margin="5"></Button>
+        <Button x:Name="btnConfirm" Grid.Row="2" Margin="5" Content="Сохранить"></Button>
     </Grid>
 </Window>

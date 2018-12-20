@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Data;
 
 namespace C_Sharp_WPF
 {
@@ -23,22 +24,18 @@ namespace C_Sharp_WPF
         /// <summary>
         /// Конструктор.
         /// </summary>
-        public DepartmentWindow(Department CurrentDepartment)
+        public DepartmentWindow(DataRow CurrentDepartment)
         {
             InitializeComponent();
             p = new DepartmentPresenter(this,CurrentDepartment);
-            if (CurrentDepartment == null)
+            btnConfirm.Click += delegate 
             {
-                btnConfirm.Click += delegate { p.AddDepartment(); };
-            }
-            else
-            {
-                btnConfirm.Click += delegate { p.UpdateDepartment(); };
-            }
+                p.SaveData();
+                DialogResult = true;
+            };
             btnConfirm.Click += delegate { Close(); };
             this.Loaded += delegate { p.LoadData(); };
         }
         public string DepartmentName { get => tbDepartmentName.Text; set => tbDepartmentName.Text = value; }
-        public string ButtonContent { set => btnConfirm.Content = value; }
     }
 }
