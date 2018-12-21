@@ -1,0 +1,36 @@
+﻿<Window x:Class="C_Sharp_WPF.EmployeeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:C_Sharp_WPF"
+        mc:Ignorable="d"
+        Title="Сотрудник" Height="320" Width="480" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30*"/>
+            <ColumnDefinition Width="70*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">Имя</TextBlock>
+        <TextBox x:Name="tbEmployeeFirstName" Grid.Row="0" Grid.Column="1" Margin="10"></TextBox>
+        <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">Фамилия</TextBlock>
+        <TextBox x:Name="tbEmployeeLastName" Grid.Row="1" Grid.Column="1" Margin="10"></TextBox>
+        <TextBlock Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">Возраст</TextBlock>
+        <TextBox x:Name="tbEmployeeAge" Grid.Row="2" Grid.Column="1" Margin="10"></TextBox>
+        <TextBlock Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">Зарплата</TextBlock>
+        <TextBox x:Name="tbEmployeeSallary" Grid.Row="3" Grid.Column="1" Margin="10"></TextBox>
+        <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center">Отдел</TextBlock>
+        <ComboBox x:Name="cbEmployeeDepartment" Grid.Column="1" Grid.Row="4" Margin="10" DisplayMemberPath="Name"></ComboBox>
+        <Button x:Name="btnEmployeeConfirm" Grid.Row="5" Grid.ColumnSpan="2" Margin="100,10"></Button>
+                  
+
+    </Grid>
+</Window>
