@@ -28,8 +28,8 @@
         <TextBlock Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">Зарплата</TextBlock>
         <TextBox x:Name="tbEmployeeSallary" Grid.Row="3" Grid.Column="1" Margin="10"></TextBox>
         <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center">Отдел</TextBlock>
-        <ComboBox x:Name="cbEmployeeDepartment" Grid.Column="1" Grid.Row="4" Margin="10" DisplayMemberPath="Name"></ComboBox>
-        <Button x:Name="btnEmployeeConfirm" Grid.Row="5" Grid.ColumnSpan="2" Margin="100,10"></Button>
+        <ComboBox x:Name="cbEmployeeDepartment" Grid.Column="1" Grid.Row="4" Margin="10" DisplayMemberPath="DepartmentName"></ComboBox>
+        <Button x:Name="btnEmployeeConfirm" Grid.Row="5" Grid.ColumnSpan="2" Content="Сохранить" Margin="100,10"></Button>
                   
 
     </Grid>

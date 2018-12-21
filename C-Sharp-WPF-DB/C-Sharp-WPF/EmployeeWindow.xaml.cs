@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Data;
 
 namespace C_Sharp_WPF
 {
@@ -24,28 +25,24 @@ namespace C_Sharp_WPF
         /// <summary>
         /// Конструктор.
         /// </summary>
-        public EmployeeWindow(Employee CurrentEmployee)
+        public EmployeeWindow(DataRow CurrentEmployee)
         {
             InitializeComponent();
             p = new EmployeePresenter(this, CurrentEmployee);
-            if (CurrentEmployee == null)
+            btnEmployeeConfirm.Click += delegate 
             {
-                btnEmployeeConfirm.Click += delegate { p.AddEmployee(); };
-            }
-            else
-            {
-                btnEmployeeConfirm.Click += delegate { p.UpdateEmployee(); };
-            }
+                p.SaveData();
+                DialogResult = true;
+            };
             btnEmployeeConfirm.Click += delegate { Close(); };
             this.Loaded += delegate { p.LoadData(); };
         }
 
         public string EmployeeFirstName { get => tbEmployeeFirstName.Text; set => tbEmployeeFirstName.Text = value; }
         public string EmployeeLastName { get => tbEmployeeLastName.Text; set => tbEmployeeLastName.Text = value; }
-        public int EmployeeAge { get => int.Parse(tbEmployeeAge.Text); set => tbEmployeeAge.Text = value.ToString(); }
-        public int EmployeeSallary { get => int.Parse(tbEmployeeSallary.Text); set => tbEmployeeSallary.Text = value.ToString(); }
-        public int EmployeeDepartmentId { get => cbEmployeeDepartment.SelectedIndex; set => cbEmployeeDepartment.SelectedIndex = value; }
-        public ObservableCollection<Department> DepartmentsList { set => cbEmployeeDepartment.ItemsSource = value; }
-        public string ButtonContent { set => btnEmployeeConfirm.Content = value; }
+        public string EmployeeAge { get => tbEmployeeAge.Text; set => tbEmployeeAge.Text = value; }
+        public string EmployeeSallary { get => tbEmployeeSallary.Text; set => tbEmployeeSallary.Text = value; }
+        public DataTable DepartmentsList { set => cbEmployeeDepartment.ItemsSource = value.DefaultView; }
+        public string EmployeeDepartment { get => (cbEmployeeDepartment.SelectedItem as DataRowView)["DepartmentName"].ToString(); set => cbEmployeeDepartment.Text = value; }
     }
 }
