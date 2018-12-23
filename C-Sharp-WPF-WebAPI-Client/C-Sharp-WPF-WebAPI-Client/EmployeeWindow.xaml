@@ -21,17 +21,17 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">Id</TextBlock>
-        <TextBox x:Name="tbEmployeeId" Grid.Row="0" Grid.Column="1" Margin="10" IsEnabled="False"></TextBox>
+        <TextBox x:Name="tbEmployeeId" Grid.Row="0" Grid.Column="1" Margin="5" IsEnabled="False"></TextBox>
         <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">Имя</TextBlock>
-        <TextBox x:Name="tbEmployeeFirstName" Grid.Row="1" Grid.Column="1" Margin="10" IsEnabled="False"></TextBox>
+        <TextBox x:Name="tbEmployeeFirstName" Grid.Row="1" Grid.Column="1" Margin="5" IsEnabled="False"></TextBox>
         <TextBlock Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">Фамилия</TextBlock>
-        <TextBox x:Name="tbEmployeeLastName" Grid.Row="2" Grid.Column="1" Margin="10" IsEnabled="False"></TextBox>
+        <TextBox x:Name="tbEmployeeLastName" Grid.Row="2" Grid.Column="1" Margin="5" IsEnabled="False"></TextBox>
         <TextBlock Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">Возраст</TextBlock>
-        <TextBox x:Name="tbEmployeeAge" Grid.Row="3" Grid.Column="1" Margin="10" IsEnabled="False"></TextBox>
+        <TextBox x:Name="tbEmployeeAge" Grid.Row="3" Grid.Column="1" Margin="5" IsEnabled="False"></TextBox>
         <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center">Зарплата</TextBlock>
-        <TextBox x:Name="tbEmployeeSallary" Grid.Row="4" Grid.Column="1" Margin="10" IsEnabled="False"></TextBox>
+        <TextBox x:Name="tbEmployeeSallary" Grid.Row="4" Grid.Column="1" Margin="5" IsEnabled="False"></TextBox>
         <TextBlock Grid.Column="0" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center">Отдел</TextBlock>
-        <TextBox x:Name="tbEmployeeDepartment" Grid.Row="5" Grid.Column="1" Margin="10" IsEnabled="False"></TextBox>
+        <TextBox x:Name="tbEmployeeDepartment" Grid.Row="5" Grid.Column="1" Margin="5" IsEnabled="False"></TextBox>
         <Button x:Name="btnConfirm" Grid.Row="6" Grid.ColumnSpan="2" Margin="100,5" Content="Ok"></Button>
     </Grid>
 </Window>

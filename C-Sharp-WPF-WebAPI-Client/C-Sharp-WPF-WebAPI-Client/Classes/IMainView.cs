@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
 
 namespace C_Sharp_WPF_WebAPI_Client
 {
@@ -20,10 +21,10 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// <summary>
         /// Коллекция подразделений.
         /// </summary>
-        IEnumerable<Department> DepartmentsCollection { set; }
+        ListView DepartmentsCollection { get; }
         /// <summary>
         /// Коллекция сотрудников.
         /// </summary>
-        IEnumerable<Employee> EmployeesCollection { set; }
+        ListView EmployeesCollection { get; }
     }
 }

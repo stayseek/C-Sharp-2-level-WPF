@@ -33,6 +33,7 @@ namespace C_Sharp_WPF_WebAPI_Client
         {
             if (currentEmployee != null)
             {
+                view.EmployeeId = currentEmployee.Id;
                 view.EmployeeFirstName = currentEmployee.FirstName;
                 view.EmployeeLastName = currentEmployee.LastName;
                 view.EmployeeAge = currentEmployee.Age;

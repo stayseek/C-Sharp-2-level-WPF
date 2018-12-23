@@ -69,7 +69,7 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// <param name="id">Идентификатор.</param>
         async public void GetEmployeeWithId(int id)
         {
-            RequestedEmployee = await GetElementAsync<Employee>(client.BaseAddress+"api/elements/"+id);
+            RequestedEmployee = await GetElementAsync<Employee>(client.BaseAddress+ "api/employees/" + id);
         }
         /// <summary>
         /// Получение данных для подразделения с определённым идентификатором.
@@ -77,7 +77,7 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// <param name="id">Идентификатор.</param>
         async public void GetDepartmentWithId(int id)
         {
-            RequestedDepartment = await GetElementAsync<Department>(client.BaseAddress + "api/elements/" + id);
+            RequestedDepartment = await GetElementAsync<Department>(client.BaseAddress + "api/departments/" + id);
         }
         /// <summary>
         /// Асинхронное получение списка элементов от сервиса.
@@ -90,7 +90,7 @@ namespace C_Sharp_WPF_WebAPI_Client
             IEnumerable<T> elements = null;
             try
             {
-                HttpResponseMessage response = await client.GetAsync(path);
+                HttpResponseMessage response = client.GetAsync(path).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     elements = await response.Content.ReadAsAsync<IEnumerable<T>>();
@@ -111,7 +111,7 @@ namespace C_Sharp_WPF_WebAPI_Client
             T element = default(T);
             try
             {
-                HttpResponseMessage response = await client.GetAsync(path);
+                HttpResponseMessage response = client.GetAsync(path).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     element = await response.Content.ReadAsAsync<T>();

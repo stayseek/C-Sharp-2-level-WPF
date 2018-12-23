@@ -27,14 +27,16 @@ namespace C_Sharp_WPF_WebAPI_Client
             InitializeComponent();
             p = new MainPresenter(this);
 
-
+            btnEmployeeViewRequest.Click += delegate { p.ShowRequestedEmployee(); };
+            btnDepatrmentViewRequest.Click += delegate { p.ShowRequestedDepartment(); };
+            btnUpdate.Click += delegate { p.UpdateData(); };
             this.Loaded += delegate { p.LoadData(); };
         }
 
-        public Employee CurrentEmployee => dgEmployeesList.SelectedItem as Employee;
+        public Employee CurrentEmployee => lvEmployeesList.SelectedItem as Employee;
         public Department CurrentDepartment => lvDepartmentList.SelectedItem as Department;
 
-        public IEnumerable<Department> DepartmentsCollection { set => lvDepartmentList.ItemsSource = value; }
-        public IEnumerable<Employee> EmployeesCollection { set => dgEmployeesList.ItemsSource = value; }
+        public ListView DepartmentsCollection { get => lvDepartmentList; }
+        public ListView EmployeesCollection { get => lvEmployeesList; }
     }
 }
