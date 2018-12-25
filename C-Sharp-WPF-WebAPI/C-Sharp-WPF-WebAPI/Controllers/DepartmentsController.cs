@@ -14,6 +14,7 @@ namespace C_Sharp_WPF_WebAPI.Controllers
         /// Передача списка подразделений.
         /// </summary>
         /// <returns>Список подразделений.</returns>
+        [Route("getdepartments")]
         public IEnumerable<Department> GetDepartments()
         {
             return OrganisationDB.GetDepartmentsList();
@@ -23,6 +24,7 @@ namespace C_Sharp_WPF_WebAPI.Controllers
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns>Подразделение.</returns>
+        [Route("getdepartments/{id}")]
         public IHttpActionResult GetDepartment(int id)
         {
             var department = OrganisationDB.GetDepartmentWithId(id);
@@ -33,6 +35,23 @@ namespace C_Sharp_WPF_WebAPI.Controllers
             else
             {
                 return Ok(department);
+            }
+        }
+        /// <summary>
+        /// Получение подразделения на создание.
+        /// </summary>
+        /// <param name="value">Подразделение.</param>
+        /// <returns>Результат добавления.</returns>
+        [Route("adddepartment")]
+        public HttpResponseMessage Post([FromBody]Department value)
+        {
+            if (OrganisationDB.AddDepartment(value))
+            {
+                return Request.CreateResponse(HttpStatusCode.Created);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
     }

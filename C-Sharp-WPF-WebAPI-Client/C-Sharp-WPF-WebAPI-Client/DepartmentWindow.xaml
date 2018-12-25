@@ -17,7 +17,7 @@
         <TextBlock Grid.Row="0" TextAlignment="Center" VerticalAlignment="Center">Id</TextBlock>
         <TextBox x:Name="tbDepartmentId" Grid.Row="1" Margin="5" TextAlignment="Center" IsEnabled="False"></TextBox>
         <TextBlock Grid.Row="2" TextAlignment="Center" VerticalAlignment="Center">Название</TextBlock>
-        <TextBox x:Name="tbDepartmentName" Grid.Row="3" Margin="5" TextAlignment="Center" IsEnabled="False"></TextBox>
+        <TextBox x:Name="tbDepartmentName" Grid.Row="3" Margin="5" TextAlignment="Center" IsEnabled="{StaticResource editable}" ></TextBox>
         <Button x:Name="btnConfirm" Grid.Row="4" Margin="5" Content="Ok"></Button>
     </Grid>
 </Window>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Routing;
+using C_Sharp_WPF_WebAPI.Models;
 
 namespace C_Sharp_WPF_WebAPI
 {

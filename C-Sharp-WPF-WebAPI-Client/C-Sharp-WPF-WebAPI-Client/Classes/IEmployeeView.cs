@@ -29,8 +29,12 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// </summary>
         int EmployeeSallary { set; get; }
         /// <summary>
-        /// Уникальный идентификатор подразделения.
+        /// Подразделение.
         /// </summary>
-        string EmployeeDepartment { set; get; }
+        Department EmployeeDepartment { set; get; }
+        /// <summary>
+        /// Список подразделений.
+        /// </summary>
+        List<Department> DepartmentsList { set;}
     }
 }

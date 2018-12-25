@@ -54,14 +54,14 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// </summary>
         async void LoadEmployees()
         {
-            EmployeesList = await GetElementsAsync<Employee>(client.BaseAddress + "api/employees");
+            EmployeesList = await GetElementsAsync<Employee>(client.BaseAddress + "getemployees");
         }
         /// <summary>
         /// Загрузка списка подразделений из сервиса.
         /// </summary>
         async void LoadDepartments()
         {
-            DepartmentsList = await GetElementsAsync<Department>(client.BaseAddress + "api/departments");
+            DepartmentsList = await GetElementsAsync<Department>(client.BaseAddress + "getdepartments");
         }
         /// <summary>
         /// Получение данных для сотрудника с определённым идентификатором.
@@ -69,7 +69,7 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// <param name="id">Идентификатор.</param>
         async public void GetEmployeeWithId(int id)
         {
-            RequestedEmployee = await GetElementAsync<Employee>(client.BaseAddress+ "api/employees/" + id);
+            RequestedEmployee = await GetElementAsync<Employee>(client.BaseAddress+ "getemployees/" + id);
         }
         /// <summary>
         /// Получение данных для подразделения с определённым идентификатором.
@@ -77,7 +77,23 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// <param name="id">Идентификатор.</param>
         async public void GetDepartmentWithId(int id)
         {
-            RequestedDepartment = await GetElementAsync<Department>(client.BaseAddress + "api/departments/" + id);
+            RequestedDepartment = await GetElementAsync<Department>(client.BaseAddress + "getdepartments/" + id);
+        }
+        /// <summary>
+        /// Добавление подразделения в базу.
+        /// </summary>
+        /// <param name="department">Подразделение.</param>
+        public void AddDepartment(Department department)
+        {
+            AddElement<Department>(department, client.BaseAddress + "adddepartment");
+        }
+        /// <summary>
+        /// Добавление сотрудника в базу.
+        /// </summary>
+        /// <param name="employee">Сотрудник.</param>
+        public void AddEmployee(Employee employee)
+        {
+            AddElement<Employee>(employee, client.BaseAddress + "addemployee");
         }
         /// <summary>
         /// Асинхронное получение списка элементов от сервиса.
@@ -105,7 +121,7 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// </summary>
         /// <typeparam name="T">Тип элемента</typeparam>
         /// <param name="path">Ссылка.</param>
-        /// <returns>Элемент</returns>
+        /// <returns>Элемент.</returns>
         static async Task <T> GetElementAsync<T>(string path)
         {
             T element = default(T);
@@ -121,6 +137,20 @@ namespace C_Sharp_WPF_WebAPI_Client
             {
             }
             return element;
+        }
+        /// <summary>
+        /// Добавление элемента в базу.
+        /// </summary>
+        /// <typeparam name="T">Тип элемента.</typeparam>
+        /// <param name="element">Элемент.</param>
+        /// <param name="path">Путь.</param>
+        void AddElement<T> (T element, string path)
+        {
+            HttpResponseMessage response = client.PostAsJsonAsync<T>(path, element).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                LoadData();
+            }
         }
     }
 }

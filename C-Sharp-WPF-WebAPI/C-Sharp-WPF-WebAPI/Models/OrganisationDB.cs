@@ -5,9 +5,8 @@ using System.Web;
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
-using C_Sharp_WPF_WebAPI.Models;
 
-namespace C_Sharp_WPF_WebAPI
+namespace C_Sharp_WPF_WebAPI.Models
 {
     public static class OrganisationDB
     {
@@ -217,6 +216,48 @@ namespace C_Sharp_WPF_WebAPI
                 return department;
             }
             else { return null; }
+        }
+        /// <summary>
+        /// Добавление сотрудника в базу.
+        /// </summary>
+        /// <param name="employee">Сотрудник.</param>
+        /// <returns>Результат добавления.</returns>
+        public static bool AddEmployee (Employee employee)
+        {
+            try
+            {
+                employeesDt.Rows.Add(
+                    Convert.ToInt32(employee.Id),
+                    employee.FirstName,
+                    employee.LastName,
+                    Convert.ToInt32(employee.Age),
+                    Convert.ToInt32(employee.Sallary),
+                    employee.Department);
+            }
+            catch
+            {
+                return false;
+            }
+            employeesAdapter.Update(employeesDt);
+            return true;
+        }
+        /// <summary>
+        /// Добавление подразделения в базу.
+        /// </summary>
+        /// <param name="department">Подразделение.</param>
+        /// <returns>Результат добавления.</returns>
+        public static bool AddDepartment(Department department)
+        {
+            try
+            {
+                departmentsDt.Rows.Add(Convert.ToInt32(department.Id),department.DepartmentName);
+            }
+            catch
+            {
+                return false;
+            }
+            departmentsAdapter.Update(departmentsDt);
+            return true;
         }
     }
 }

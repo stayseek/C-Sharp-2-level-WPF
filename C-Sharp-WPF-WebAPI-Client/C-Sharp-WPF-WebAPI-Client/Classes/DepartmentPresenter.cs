@@ -34,5 +34,13 @@ namespace C_Sharp_WPF_WebAPI_Client
             view.DepartmentId = currentDepartment.Id;
             view.DepartmentName = currentDepartment.DepartmentName;
         }
+        /// <summary>
+        /// Сохранение данных из формы.
+        /// </summary>
+        public void SaveData()
+        {
+            currentDepartment.Id = view.DepartmentId;
+            currentDepartment.DepartmentName = view.DepartmentName;
+        }
     }
 }

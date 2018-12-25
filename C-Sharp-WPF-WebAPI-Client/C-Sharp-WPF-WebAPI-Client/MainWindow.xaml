@@ -12,6 +12,7 @@
             <RowDefinition Height="10*"/>
             <RowDefinition Height="80*"/>
             <RowDefinition Height="10*"/>
+            <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -42,5 +43,7 @@
         </ListView>
         <Button x:Name="btnEmployeeViewRequest" Grid.Column="0" Grid.Row="3" Margin="5">Запросить данные выбранного сотрудника</Button>
         <Button x:Name="btnDepatrmentViewRequest" Grid.Column="1" Grid.Row="3" Margin="5">Запросить данные выбранного подразделения</Button>
+        <Button x:Name="btnEmployeeAdd" Grid.Column="0" Grid.Row="4" Margin="5">Создать сотрудника</Button>
+        <Button x:Name="btnDepatrmentAdd" Grid.Column="1" Grid.Row="4" Margin="5">Создать подразделение</Button>
     </Grid>
 </Window>

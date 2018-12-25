@@ -24,13 +24,16 @@ namespace C_Sharp_WPF_WebAPI_Client
         /// Конструктор.
         /// </summary>
         /// <param name="department">Отображаемое подразделение.</param>
-        public DepartmentWindow(Department department)
+        public DepartmentWindow(Department department, bool editable)
         {
+            this.Resources.Add("editable", editable);
             InitializeComponent();
             p = new DepartmentPresenter(this,department);
+            
 
             this.Loaded += delegate { p.LoadData(); };
-            btnConfirm.Click += delegate { Close(); };
+            this.Closing += delegate { p.SaveData(); };
+            btnConfirm.Click += delegate { DialogResult = true; Close(); };
         }
 
         public int DepartmentId { get => int.Parse(tbDepartmentId.Text); set => tbDepartmentId.Text = value.ToString(); }

@@ -14,6 +14,7 @@ namespace C_Sharp_WPF_WebAPI.Controllers
         /// Передача списка сотрудников.
         /// </summary>
         /// <returns>Список сотрудников.</returns>
+        [Route("getemployees")]
         public IEnumerable<Employee> GetEmployees()
         {
             return OrganisationDB.GetEmployeesList();
@@ -23,6 +24,7 @@ namespace C_Sharp_WPF_WebAPI.Controllers
         /// </summary>
         /// <param name="id">Идентификатор.</param>
         /// <returns>Сотрудник.</returns>
+        [Route("getemployees/{id}")]
         public IHttpActionResult GetEmployee(int id)
         {
             var employee = OrganisationDB.GetEmployeeWithId(id);
@@ -33,6 +35,23 @@ namespace C_Sharp_WPF_WebAPI.Controllers
             else
             {
                 return Ok(employee);
+            }
+        }
+        /// <summary>
+        /// Получение сотрудника на создание.
+        /// </summary>
+        /// <param name="value">Сотрудник.</param>
+        /// <returns>Результат добавления.</returns>
+        [Route("addemployee")]
+        public HttpResponseMessage Post([FromBody]Employee value)
+        {
+            if (OrganisationDB.AddEmployee(value))
+            {
+                return Request.CreateResponse(HttpStatusCode.Created);
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
     }

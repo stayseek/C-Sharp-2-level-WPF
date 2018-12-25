@@ -29,6 +29,8 @@ namespace C_Sharp_WPF_WebAPI_Client
 
             btnEmployeeViewRequest.Click += delegate { p.ShowRequestedEmployee(); };
             btnDepatrmentViewRequest.Click += delegate { p.ShowRequestedDepartment(); };
+            btnEmployeeAdd.Click += delegate { p.AddEmployee(); };
+            btnDepatrmentAdd.Click += delegate { p.AddDepartment(); };
             btnUpdate.Click += delegate { p.UpdateData(); };
             this.Loaded += delegate { p.LoadData(); };
         }
